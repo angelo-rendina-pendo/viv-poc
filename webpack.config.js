@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 const path = require('path');
 
 module.exports = {
@@ -11,18 +12,29 @@ module.exports = {
         path: path.resolve(__dirname, 'deploy')
     },
     devServer: {
-        contentBase: './deploy'
+        contentBase: './deploy',
+        historyApiFallback: true
+    },
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, './src')
+        }
     },
     module: {
         rules: [
             {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader']
+            },
+            {
+                test: /\.vue$/,
+                use: 'vue-loader'
             }
         ]
     },
     plugins: [
         new HtmlWebpackPlugin(),
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
+        new VueLoaderPlugin()
     ],
 };
