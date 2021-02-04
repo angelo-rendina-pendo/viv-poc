@@ -3,11 +3,12 @@ import VueRouter from 'vue-router';
 import Home from '@/core/pages/home.vue';
 import About from '@/core/pages/about.vue';
 import NotFound from '@/core/pages/404.vue';
-import Plugin from '@/core/pages/plugin.vue';
+import PluginPage from '@/core/pages/plugin.vue';
+import Plugin from 'viv-plugin';
 
 Vue.use(VueRouter);
 
-export default new VueRouter({
+const router = new VueRouter({
     mode: 'history',
     routes: [
         {
@@ -20,7 +21,7 @@ export default new VueRouter({
         },
         {
             path: '/plugin*',
-            component: Plugin
+            component: PluginPage
         },
         {
             path: '/404',
@@ -32,3 +33,11 @@ export default new VueRouter({
         }
     ]
 });
+
+router.afterEach((to) => {
+    if (to.path.startsWith('/plugin')) {
+        Plugin.$router.push(to, () => {});
+    }
+});
+
+export default router;

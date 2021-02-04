@@ -15,12 +15,14 @@
 </template>
 
 <script>
+import { pluginLinks } from 'viv-plugin';
+
 export default {
     computed: {
         links () {
             return [
                 { name: 'Home', to: '/' },
-                { name: 'Plugin', to: '/plugin' },
+                ...pluginLinks,
                 { name: 'About', to: '/about' }
             ];
         }
